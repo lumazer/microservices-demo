@@ -70,3 +70,5 @@ jobs:
           cd ~/git/microservices-demo
           git pull
           sudo kubectl apply -n online-boutique-prod -f ~/git/microservices-demo/app/online-boutique-kubernetes-manifests.yaml
+          sudo kubectl apply -n online-boutique-prod -f https://raw.githubusercontent.com/lumazer/kubernetes_cluster/main/online-boutique-prod/online-boutique-prod-tls-secret.yaml
+          sudo kubectl apply -n online-boutique-prod -f https://raw.githubusercontent.com/lumazer/kubernetes_cluster/main/online-boutique-prod/online-boutique-prod-ingress.yaml
