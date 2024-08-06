@@ -35,7 +35,13 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
-      # Runs a set of commands using the runners shell
+      # Проверяем на определённую фразу дважды встречающуюся на фронте
       - name: curl frontend
         run: |
           if [ $(curl http://$(sudo kubectl get service -n online-boutique | grep frontend |  awk '{print $3}'):80 | grep "demo purposes only." | wc -l) -gt 1 ]; then true; fi
+
+      # Проверяем процентаж ошибок приложения loadgenerator
+      - name: check error procentage
+        run: |
+          if [[ "$(kubectl logs -l app=loadgenerator -n online-boutique | grep Aggregated | awk '{print $3}' | sed "s/[(][^)]*[)]//g")" -gt "0" ]]; then echo "Количестко ошибок меньше 1%"; else exit 0; fi
+          
