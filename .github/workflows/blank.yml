@@ -59,7 +59,7 @@ jobs:
           # Ждём, пока под loadgenerator поднимется и нагенерирует нагрузку в объёме 50 заказов
           REQUEST_COUNT="0"
           while [[ "$REQUEST_COUNT"  -lt "50"  ]]; do
-              sleep 5
+              sleep 10
               REQUEST_COUNT=$(sudo kubectl logs -l app=loadgenerator -n online-boutique | grep Aggregated | awk '{print $2}')
           done
           # Проверяем процентаж ошибок
