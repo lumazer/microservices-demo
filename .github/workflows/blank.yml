@@ -25,16 +25,27 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      # Удаляем проверочный namespace (он восстановится с помощью self-heal опции Argo CD)
+      - name: Delete test store namespace
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-
+          sudo kubectl delete namespaces online-boutique
+          sleep 60
+      - name: Wait For Pods
+        timeout-minutes: 20
+        run: |
+          set -x
+          kubectl wait --for=condition=available --timeout=1000s deployment/redis-cart -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/adservice -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/cartservice -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/checkoutservice -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/currencyservice -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/emailservice -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/frontend -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/loadgenerator -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/paymentservice -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/productcatalogservice -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/recommendationservice -n online-boutique
+          kubectl wait --for=condition=available --timeout=1000s deployment/shippingservice -n online-boutique
       # Проверяем на определённую фразу дважды встречающуюся на фронте
       - name: curl frontend
         run: |
