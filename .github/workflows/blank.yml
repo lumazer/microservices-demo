@@ -29,7 +29,6 @@ jobs:
       - name: Delete test store namespace
         run: |
           sudo kubectl delete namespaces online-boutique
-          echo "Ждём 5 минут" && sleep 600
       - name: Wait For Pods
         timeout-minutes: 20
         run: |
