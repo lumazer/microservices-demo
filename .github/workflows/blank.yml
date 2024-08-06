@@ -28,7 +28,7 @@ jobs:
       # Удаляем проверочный namespace (он восстановится с помощью self-heal опции Argo CD)
       - name: Delete test store namespace
         run: |
-          sudo kubectl delete namespaces online-boutique && sleep 90
+          sudo kubectl delete namespaces online-boutique && sleep 120
       - name: Wait For Pods
         timeout-minutes: 20
         run: |
