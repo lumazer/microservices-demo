@@ -43,5 +43,5 @@ jobs:
       # Проверяем процентаж ошибок приложения loadgenerator
       - name: check error procentage
         run: |
-          if [[ "$(kubectl logs -l app=loadgenerator -n online-boutique | grep Aggregated | awk '{print $3}' | sed "s/[(][^)]*[)]//g")" -gt "0" ]]; then echo "Количестко ошибок меньше 1%"; else exit 0; fi
+          if [[ "$(sudo kubectl logs -l app=loadgenerator -n online-boutique | grep Aggregated | awk '{print $3}' | sed "s/[(][^)]*[)]//g")" -gt "0" ]]; then echo "Количестко ошибок меньше 1%"; else exit 0; fi
           
