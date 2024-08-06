@@ -66,7 +66,7 @@ jobs:
           if [[ "$(sudo kubectl logs -l app=loadgenerator -n online-boutique | grep Aggregated | awk '{print $3}' | sed "s/[(][^)]*[)]//g")" -gt "0" ]]; then exit 1; else exit 0; fi
       - name: Run for prod
         run: |
-          sudo kubectl create ns online-boutique-prod >&2
+          if [sudo kubectl create ns online-boutique-prod]; then exit 0; else exit 0; fi 
           cd ~/git/microservices-demo
           git pull
           sudo kubectl apply -n online-boutique-prod -f ~/git/microservices-demo/app/online-boutique-kubernetes-manifests.yaml
