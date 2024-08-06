@@ -29,23 +29,24 @@ jobs:
       - name: Delete test store namespace
         run: |
           sudo kubectl delete namespaces online-boutique
+          echo "Ждём 5 минут"
           sleep 600
       - name: Wait For Pods
         timeout-minutes: 20
         run: |
           set -x
-          kubectl wait --for=condition=available --timeout=1000s deployment/redis-cart -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/adservice -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/cartservice -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/checkoutservice -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/currencyservice -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/emailservice -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/frontend -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/loadgenerator -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/paymentservice -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/productcatalogservice -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/recommendationservice -n online-boutique
-          kubectl wait --for=condition=available --timeout=1000s deployment/shippingservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/redis-cart -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/adservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/cartservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/checkoutservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/currencyservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/emailservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/frontend -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/loadgenerator -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/paymentservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/productcatalogservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/recommendationservice -n online-boutique
+          sudo kubectl wait --for=condition=available --timeout=1000s deployment/shippingservice -n online-boutique
       # Проверяем на определённую фразу дважды встречающуюся на фронте
       - name: curl frontend
         run: |
